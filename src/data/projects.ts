@@ -1,0 +1,92 @@
+import innovationPark from "@/assets/innovation-park.jpg";
+import publicLibrary from "@/assets/public-library.jpg";
+import virologyCenter from "@/assets/virology-center.jpg";
+import massHousing from "@/assets/mass-housing.jpg";
+
+export interface Project {
+  id: string;
+  title: string;
+  subtitle: string;
+  location: string;
+  year: string;
+  semester?: string;
+  category: string;
+  siteArea?: string;
+  builtUpArea?: string;
+  description: string;
+  concept: string;
+  thumbnail: string;
+  images: string[];
+  featured: boolean;
+}
+
+export const projects: Project[] = [
+  {
+    id: "innovation-park",
+    title: "Innovation Park",
+    subtitle: "Tech Hub & Research Campus",
+    location: "Indore, Madhya Pradesh",
+    year: "2022",
+    semester: "8th Semester",
+    category: "Institutional",
+    siteArea: "25,000 sq.m",
+    builtUpArea: "18,500 sq.m",
+    description: "A dynamic innovation ecosystem designed to foster collaboration between technology startups, research institutions, and established enterprises. The campus integrates flexible workspaces, research laboratories, and collaborative zones within a landscape-driven masterplan.",
+    concept: "The design emerges from the intersection of geometric clarity and organic flow. Central courtyards create microclimates while connecting various program elements. The stepped massing responds to Indore's climate, maximizing shaded areas and natural ventilation.",
+    thumbnail: innovationPark,
+    images: [innovationPark, innovationPark, innovationPark],
+    featured: true,
+  },
+  {
+    id: "public-library",
+    title: "Public Library",
+    subtitle: "Urban Knowledge Hub",
+    location: "Pune, Maharashtra",
+    year: "2021",
+    semester: "6th Semester",
+    category: "Cultural",
+    siteArea: "4,500 sq.m",
+    builtUpArea: "6,200 sq.m",
+    description: "A contemporary public library that reimagines the traditional reading space as a vibrant urban living room. The design integrates digital resources, traditional collections, and community gathering spaces within an architecturally expressive envelope.",
+    concept: "Stacked volumes create intimate reading niches while a central atrium floods the interior with natural light. The façade's parametric screen modulates daylight and provides visual privacy while maintaining connection to the street.",
+    thumbnail: publicLibrary,
+    images: [publicLibrary, publicLibrary, publicLibrary],
+    featured: true,
+  },
+  {
+    id: "virology-center",
+    title: "Institute of Virology",
+    subtitle: "Advanced Research Facility",
+    location: "Nashik, Maharashtra",
+    year: "2022",
+    semester: "7th Semester",
+    category: "Healthcare / Research",
+    siteArea: "12,000 sq.m",
+    builtUpArea: "8,800 sq.m",
+    description: "A state-of-the-art virology research center designed with stringent biosafety protocols while maintaining human-centric work environments. The facility houses BSL-2 and BSL-3 laboratories, administrative wings, and staff amenities.",
+    concept: "The design separates public and restricted zones through a clear zoning strategy. Natural elements are integrated wherever safety permits, with internal courtyards providing respite for researchers. The building envelope responds to solar orientation, minimizing heat gain on laboratory wings.",
+    thumbnail: virologyCenter,
+    images: [virologyCenter, virologyCenter, virologyCenter],
+    featured: true,
+  },
+  {
+    id: "mass-housing",
+    title: "Mass Housing",
+    subtitle: "Affordable Urban Living",
+    location: "Pune, Maharashtra",
+    year: "2021",
+    semester: "5th Semester",
+    category: "Residential",
+    siteArea: "8,000 sq.m",
+    builtUpArea: "22,000 sq.m",
+    description: "A socially conscious housing development that challenges the monotony of typical mass housing. The design provides diverse unit typologies, shared community spaces, and integrated green infrastructure while maintaining economic viability.",
+    concept: "Cluster housing creates semi-private courtyards that encourage community interaction. Staggered building masses ensure adequate light and ventilation for all units. Ground floors integrate retail and community facilities, activating the street edge.",
+    thumbnail: massHousing,
+    images: [massHousing, massHousing, massHousing],
+    featured: true,
+  },
+];
+
+export const getProjectById = (id: string): Project | undefined => {
+  return projects.find(project => project.id === id);
+};
