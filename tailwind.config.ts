@@ -54,8 +54,8 @@ export default {
         "project-hover": "hsl(var(--project-hover))",
       },
       fontFamily: {
-        serif: ["Cormorant Garamond", "Cormorant", "Georgia", "serif"],
-        sans: ["DM Sans", "system-ui", "sans-serif"],
+        serif: ["Century Gothic", "CenturyGothic", "AppleGothic", "sans-serif"],
+        sans: ["Century Gothic", "CenturyGothic", "AppleGothic", "sans-serif"],
       },
       fontSize: {
         "display": ["clamp(3rem, 8vw, 7rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],

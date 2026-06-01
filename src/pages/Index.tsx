@@ -26,11 +26,13 @@ const Index = () => {
         <div className="text-center">
           {/* Logo */}
           <div className="mb-8 animate-fade-in">
-            <img
-              src={logo}
-              alt="SAPTHAKALAA Logo"
-              className="h-24 w-24 lg:h-32 lg:w-32 object-contain mx-auto"
-            />
+            <div className="mx-auto inline-flex items-center justify-center rounded-3xl border border-border bg-secondary p-6 shadow-sm shadow-foreground/5">
+              <img
+                src={logo}
+                alt="sapthakalaa logo"
+                className="h-24 w-24 lg:h-32 lg:w-32 object-contain"
+              />
+            </div>
           </div>
 
           {/* Studio Name */}
@@ -38,7 +40,7 @@ const Index = () => {
             className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight text-foreground animate-fade-in"
             style={{ animationDelay: "200ms" }}
           >
-            SAPTHAKALAA
+            sapthakalaa
           </h1>
           
           {/* Tagline */}
@@ -96,7 +98,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal>
               <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                SAPTHAKALAA's practice is informed by deep environmental research. 
+                sapthakalaa's practice is informed by deep environmental research. 
                 Our design work blends environmental planning, management, and climate-responsive architecture. 
                 We believe in creating spaces that respond to their context while serving human needs.
               </p>

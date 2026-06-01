@@ -92,11 +92,31 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "kern" 1, "liga" 1;
+    font-family: "Century Gothic", "CenturyGothic", "AppleGothic", sans-serif;
+    text-transform: lowercase;
   }
 
   /* Typography refinements */
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif tracking-tight;
+    text-transform: none;
+  }
+
+  h1:first-letter,
+  h2:first-letter,
+  h3:first-letter,
+  h4:first-letter,
+  h5:first-letter,
+  h6:first-letter {
+    text-transform: uppercase;
+  }
+
+  .capitalize-first {
+    text-transform: none;
+  }
+
+  .capitalize-first:first-letter {
+    text-transform: uppercase;
   }
 
   p {

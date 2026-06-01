@@ -20,12 +20,12 @@ export function Footer() {
             <div className="flex items-center gap-4 mb-6">
               <img 
                 src={logo} 
-                alt="SAPTHAKALAA Logo" 
+                alt="sapthakalaa logo" 
                 className="h-12 w-12 object-contain invert"
               />
               <div>
                 <h2 className="font-serif text-xl lg:text-2xl font-medium">
-                  SAPTHAKALAA
+                  sapthakalaa
                 </h2>
                 <p className="text-xs text-primary-foreground/60 uppercase tracking-widest">
                   Environmental Design, Planning & Management
@@ -131,7 +131,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="mt-16 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-primary-foreground/50">
-          <span>© {currentYear} SAPTHAKALAA Environmental Design, Planning & Management. All rights reserved.</span>
+          <span>© {currentYear} sapthakalaa Environmental Design, Planning & Management. All rights reserved.</span>
           <span>Architecture • Planning • Management</span>
         </div>
       </div>

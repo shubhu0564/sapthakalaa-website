@@ -120,13 +120,13 @@ app.post("/api/send-email", async (req, res) => {
     if (transporter) {
       try {
         const info = await transporter.sendMail({
-          from: `SAPTHAKALAA Contact <${mailFrom}>`,
+          from: `sapthakalaa Contact <${mailFrom}>`,
           to: mailRecipient,
           replyTo: email,
-          subject: `[SAPTHAKALAA Contact] ${subject}`,
+          subject: `[sapthakalaa Contact] ${subject}`,
           text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\n${message}`,
           html: `
-            <h2>SAPTHAKALAA Contact Form</h2>
+            <h2>sapthakalaa Contact Form</h2>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Subject:</strong> ${subject}</p>

@@ -85,10 +85,10 @@ const About = () => {
                   About the Studio
                 </span>
                 <h1 className="font-serif text-heading-1 mt-4">
-                  SAPTHAKALAA Environmental Design, Planning & Management
+                  sapthakalaa Environmental Design, Planning & Management
                 </h1>
                 <p className="font-serif text-heading-3 text-muted-foreground max-w-2xl mt-6">
-                  SAPTHAKALAA is a multidisciplinary architectural and environmental design practice committed to creating thoughtful, sustainable, and timeless spaces.
+                  sapthakalaa is a multidisciplinary architectural and environmental design practice committed to creating thoughtful, sustainable, and timeless spaces.
                 </p>
               </ScrollReveal>
 
@@ -98,7 +98,7 @@ const About = () => {
                     Founded by <strong>AR.RD Omkar Madhav</strong>, the studio is driven by a passion for architecture that balances innovation, functionality, and environmental responsibility.
                   </p>
                   <p>
-                    Based in Maharashtra, India, SAPTHAKALAA works across residential, commercial, institutional, hospitality, and landscape projects. Every design is rooted in context, culture, climate, and human experience.
+                    Based in Maharashtra, India, sapthakalaa works across residential, commercial, institutional, hospitality, and landscape projects. Every design is rooted in context, culture, climate, and human experience.
                   </p>
                   <p>
                     We believe architecture is more than building—it is the art of shaping experiences, improving quality of life, and creating environments that inspire future generations.
@@ -116,18 +116,18 @@ const About = () => {
           <SectionHeader
             overline="Founder & Principal Architect"
             title="AR.RD Omkar Madhav"
-            description="Founder and creative force behind SAPTHAKALAA, leading every project with hands-on design leadership and technical precision."
+            description="Founder and creative force behind sapthakalaa, leading every project with hands-on design leadership and technical precision."
           />
 
           <div className="mt-12 space-y-6 text-body-lg text-muted-foreground max-w-4xl">
             <p>
-              AR.RD Omkar Madhav established SAPTHAKALAA Environmental Design, Planning & Management with a vision to create architecture that harmonizes aesthetics, functionality, and environmental consciousness.
+              AR.RD Omkar Madhav established sapthakalaa Environmental Design, Planning & Management with a vision to create architecture that harmonizes aesthetics, functionality, and environmental consciousness.
             </p>
             <p>
               His design philosophy is rooted in understanding the relationship between people, space, and nature. Successful architecture emerges from a careful balance of form, materiality, climate responsiveness, and user experience.
             </p>
             <p>
-              Through SAPTHAKALAA, Omkar leads every project with a hands-on approach, ensuring that each design reflects the highest standards of creativity, precision, and professionalism.
+              Through sapthakalaa, Omkar leads every project with a hands-on approach, ensuring that each design reflects the highest standards of creativity, precision, and professionalism.
             </p>
           </div>
         </div>

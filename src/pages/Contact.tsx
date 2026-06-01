@@ -196,7 +196,7 @@ const Contact = () => {
                     Open for Projects
                   </h3>
                   <p className="text-muted-foreground">
-                    SAPTHAKALAA is currently accepting new projects and collaborations 
+                    sapthakalaa is currently accepting new projects and collaborations 
                     in environmental design, planning, management, visualization, 
                     and research across India.
                   </p>
