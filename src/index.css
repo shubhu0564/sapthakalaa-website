@@ -8,16 +8,17 @@
   :root {
     /* Warm, earthy palette inspired by architectural materials */
     --background: 40 20% 98%;
-    --foreground: 30 10% 12%;
+    --foreground: 32 31% 10%;
+    --text-main: 32 31% 10%;
 
     --card: 40 15% 96%;
-    --card-foreground: 30 10% 12%;
+    --card-foreground: 32 31% 10%;
 
     --popover: 40 20% 98%;
-    --popover-foreground: 30 10% 12%;
+    --popover-foreground: 32 31% 10%;
 
     /* Primary: Warm charcoal - sophisticated and grounding */
-    --primary: 30 8% 20%;
+    --primary: 32 31% 10%;
     --primary-foreground: 40 20% 98%;
 
     /* Secondary: Warm stone grey */
@@ -38,6 +39,10 @@
     --border: 35 15% 88%;
     --input: 35 15% 88%;
     --ring: 30 8% 20%;
+
+    --footer: 47 18% 46%;
+    --footer-foreground: 32 31% 10%;
+    --logo-bg: 0 0% 100%;
 
     --radius: 0.25rem;
 
@@ -93,7 +98,6 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "kern" 1, "liga" 1;
     font-family: "Century Gothic", "CenturyGothic", "AppleGothic", sans-serif;
-    text-transform: lowercase;
   }
 
   /* Typography refinements */
@@ -205,5 +209,17 @@
   /* Gradient text */
   .text-gradient {
     @apply bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent;
+  }
+
+  .bg-footer {
+    background-color: hsl(var(--footer));
+  }
+
+  .text-footer-foreground {
+    color: hsl(var(--footer-foreground));
+  }
+
+  .bg-logo {
+    background-color: hsl(var(--logo-bg));
   }
 }

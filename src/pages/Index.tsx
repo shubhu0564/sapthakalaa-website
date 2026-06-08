@@ -5,7 +5,8 @@ import { Footer } from "@/components/Footer";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { projects } from "@/data/projects";
-import logo from "@/assets/logo.jpg";
+import { BRAND } from "@/lib/brand";
+import logo from "@/assets/saptha..jpg";
 
 const Index = () => {
   const featuredProjects = projects.filter((p) => p.featured);
@@ -26,13 +27,11 @@ const Index = () => {
         <div className="text-center">
           {/* Logo */}
           <div className="mb-8 animate-fade-in">
-            <div className="mx-auto inline-flex items-center justify-center rounded-3xl border border-border bg-secondary p-6 shadow-sm shadow-foreground/5">
-              <img
-                src={logo}
-                alt="sapthakalaa logo"
-                className="h-24 w-24 lg:h-32 lg:w-32 object-contain"
-              />
-            </div>
+            <img
+              src={logo}
+              alt={`${BRAND.name} logo`}
+              className="mx-auto h-24 w-24 lg:h-32 lg:w-32 object-contain"
+            />
           </div>
 
           {/* Studio Name */}
@@ -40,7 +39,7 @@ const Index = () => {
             className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight text-foreground animate-fade-in"
             style={{ animationDelay: "200ms" }}
           >
-            sapthakalaa
+            {BRAND.name}
           </h1>
           
           {/* Tagline */}
@@ -48,7 +47,7 @@ const Index = () => {
             className="mt-4 text-sm md:text-base uppercase tracking-[0.3em] text-muted-foreground animate-fade-in"
             style={{ animationDelay: "400ms" }}
           >
-            Environmental Design, Planning & Management
+            {BRAND.tagline}
           </p>
         </div>
 
@@ -68,7 +67,7 @@ const Index = () => {
           {featuredProjects.map((project, index) => (
             <Link
               key={project.id}
-              to={`/project/${project.id}`}
+              to={`/projects/${project.id}`}
               className="group relative aspect-[4/3] overflow-hidden"
             >
               <img
@@ -98,7 +97,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal>
               <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                sapthakalaa's practice is informed by deep environmental research. 
+                sapthkalaa's practice is informed by deep environmental research. 
                 Our design work blends environmental planning, management, and climate-responsive architecture. 
                 We believe in creating spaces that respond to their context while serving human needs.
               </p>

@@ -16,8 +16,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "connect.sapthakalaa@gmail.com",
-    href: "mailto:connect.sapthakalaa@gmail.com",
+    value: "connect.sapthkalaa@gmail.com",
+    href: "mailto:connect.sapthkalaa@gmail.com",
   },
   {
     icon: Phone,
@@ -65,7 +65,7 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const apiUrl = import.meta.env.VITE_MAIL_API_URL ?? "http://localhost:5000/api/send-email";
+    const apiUrl = import.meta.env.VITE_MAIL_API_URL ?? "/api/send-email";
 
     try {
       const response = await fetch(apiUrl, {
@@ -95,7 +95,7 @@ const Contact = () => {
         description:
           error instanceof Error
             ? error.message
-            : "Unable to send the message. Please try again or email connect.sapthakalaa@gmail.com directly.",
+            : "Unable to send the message. Please try again or email connect.sapthkalaa@gmail.com directly.",
       });
     } finally {
       setIsSubmitting(false);
@@ -196,7 +196,7 @@ const Contact = () => {
                     Open for Projects
                   </h3>
                   <p className="text-muted-foreground">
-                    sapthakalaa is currently accepting new projects and collaborations 
+                    sapthkalaa is currently accepting new projects and collaborations 
                     in environmental design, planning, management, visualization, 
                     and research across India.
                   </p>

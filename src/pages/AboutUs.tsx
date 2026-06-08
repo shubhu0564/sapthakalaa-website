@@ -10,10 +10,10 @@ export default function AboutUs() {
         <section className="px-6 lg:px-12 py-12">
           <div className="container mx-auto max-w-4xl">
             <h1 className="font-serif text-4xl lg:text-5xl font-medium mb-6">
-              About sapthakalaa
+              About sapthkalaa
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              sapthakalaa is an architecture, planning and design practice founded by Dr.
+              sapthkalaa is an architecture, planning and design practice founded by Dr.
               Omkar Sharma. The studio believes in the power of thoughtful design to
               transform environments and enhance quality of life.
             </p>
@@ -28,7 +28,7 @@ export default function AboutUs() {
                 About the Studio
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Founded in 2015, sapthakalaa represents a commitment to environmental
+                Founded in 2015, sapthkalaa represents a commitment to environmental
                 design, planning, and management. The studio works across multiple scales—
                 from individual buildings to urban masterplans—always with a focus on
                 sustainability, cultural sensitivity, and timeless design.

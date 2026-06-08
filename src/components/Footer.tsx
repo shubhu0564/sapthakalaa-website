@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Instagram, Linkedin, Youtube } from "lucide-react";
-import logo from "@/assets/logo.jpg";
+import { BRAND } from "@/lib/brand";
+import logo from "@/assets/saptha..jpg";
 
 const PinterestIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
@@ -12,48 +13,50 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-foreground text-primary-foreground">
+    <footer className="bg-footer text-footer-foreground">
       <div className="container mx-auto px-6 lg:px-12 py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-4 mb-6">
-              <img 
-                src={logo} 
-                alt="sapthakalaa logo" 
-                className="h-12 w-12 object-contain invert"
+              <img
+                src={logo}
+                alt={`${BRAND.name} logo`}
+                className="h-8 w-8 object-contain"
               />
               <div>
                 <h2 className="font-serif text-xl lg:text-2xl font-medium">
-                  sapthakalaa
+                  {BRAND.name}
                 </h2>
-                <p className="text-xs text-primary-foreground/60 uppercase tracking-widest">
-                  Environmental Design, Planning & Management
+                <p className="text-xs text-footer-foreground/60 uppercase tracking-widest">
+                  {BRAND.tagline}
                 </p>
               </div>
             </div>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-sm">
-              Designing spaces that respond to environment, culture, and human experience. 
-              Based in Mumbai, working across India.
+            <p className="text-footer-foreground/70 text-sm leading-relaxed max-w-sm">
+              {BRAND.description} Based in {BRAND.location.split(",")[0]}, working across India.
             </p>
           </div>
 
           {/* Navigation */}
           <div className="lg:col-span-2">
-            <h3 className="text-xs uppercase tracking-widest text-primary-foreground/50 mb-6">
+            <h3 className="text-xs uppercase tracking-widest text-footer-foreground/50 mb-6">
               Explore
             </h3>
             <nav className="flex flex-col gap-3">
               {[
-                { label: "Architecture", href: "/projects" },
+                { label: "Home", href: "/" },
                 { label: "About", href: "/about" },
-                { label: "Experience", href: "/experience" },
+                { label: "Architecture", href: "/projects" },
+                { label: "Research", href: "/research" },
+                { label: "Studio Library", href: "/studio/library" },
+                { label: "Studio Archive", href: "/studio/archive" },
                 { label: "Contact", href: "/contact" },
               ].map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-300"
+                  className="text-sm text-footer-foreground/80 hover:text-footer-foreground transition-colors duration-300"
                 >
                   {item.label}
                 </Link>
@@ -68,18 +71,18 @@ export function Footer() {
             </h3>
             <div className="flex flex-col gap-3 text-sm text-primary-foreground/80">
               <a
-                href="mailto:connect.sapthakalaa@gmail.com"
+                href={`mailto:${BRAND.email}`}
                 className="hover:text-primary-foreground transition-colors duration-300"
               >
-                connect.sapthakalaa@gmail.com
+                {BRAND.email}
               </a>
               <a
-                href="tel:+918928236838"
+                href={`tel:${BRAND.phone.replace(/\s+/g, "")}`}
                 className="hover:text-primary-foreground transition-colors duration-300"
               >
-                +91 8928236838
+                {BRAND.phone}
               </a>
-              <span>Mumbai, Maharashtra, India</span>
+              <span>{BRAND.location}</span>
             </div>
           </div>
 
@@ -131,7 +134,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="mt-16 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-primary-foreground/50">
-          <span>© {currentYear} sapthakalaa Environmental Design, Planning & Management. All rights reserved.</span>
+          <span>© {currentYear} {BRAND.name} {BRAND.tagline}. All rights reserved.</span>
           <span>Architecture • Planning • Management</span>
         </div>
       </div>

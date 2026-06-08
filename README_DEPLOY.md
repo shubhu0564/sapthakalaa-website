@@ -31,15 +31,23 @@ Deployment and local run instructions
 
 Place production secrets in environment (DO NOT commit to git). Example `.env` keys used by this project:
 
+For the live domain `saphakalaa.co.in`, set:
+
+- VITE_MAIL_API_URL=/api/send-email
+
+This keeps the contact form calling the same origin as the site on production.
+
 - SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS
 - MAIL_TO, MAIL_FROM
 - MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD
 
-5) Deploying to `sapthakalaa.co.in`
+5) Deploying to `saphakalaa.co.in`
 
 - Option A: VPS (DigitalOcean/Hetzner)
   - Push code to the server, install Docker, run `docker-compose up -d --build`.
-  - Point your domain A record to the server IP and use Let's Encrypt (certbot) or Caddy to provide HTTPS.
+  - Point `saphakalaa.co.in` and `www.saphakalaa.co.in` to the server IP in DNS.
+  - Use Caddy or Nginx + Let's Encrypt to terminate HTTPS.
+  - Keep `VITE_MAIL_API_URL=/api/send-email` in the production environment so the contact form works on the custom domain.
 
 - Option B: Managed services (Render/Railway)
   - Deploy backend as a Node service, set environment variables in the service settings.

@@ -33,7 +33,7 @@ export const researchPapers: ResearchPaper[] = [
   {
     id: "research-03",
     title: "Heritage Conservation in Modern Context",
-    author: "Team sapthakalaa",
+    author: "Team sapthkalaa",
     year: 2021,
     category: "paper",
     description: "Research on integrating historical preservation with contemporary functionality",

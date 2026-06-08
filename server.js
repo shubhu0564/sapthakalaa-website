@@ -11,8 +11,8 @@ dotenv.config({ path: path.join(process.cwd(), ".env") });
 const app = express();
 const port = process.env.PORT ?? 5000;
 const apiOrigin = process.env.MAIL_API_ORIGIN ?? process.env.VITE_MAIL_API_ORIGIN ?? "*";
-const mailRecipient = process.env.MAIL_TO ?? "connect.sapthakalaa@gmail.com";
-const mailFrom = process.env.MAIL_FROM ?? process.env.SMTP_USER ?? "no-reply@connect.sapthakalaa.com";
+const mailRecipient = process.env.MAIL_TO ?? "connect.saphakalaa@gmail.com";
+const mailFrom = process.env.MAIL_FROM ?? process.env.SMTP_USER ?? "no-reply@connect.saphakalaa.com";
 
 const mysqlHost = process.env.MYSQL_HOST;
 const mysqlPort = parseInt(process.env.MYSQL_PORT ?? "3306", 10);
@@ -120,13 +120,13 @@ app.post("/api/send-email", async (req, res) => {
     if (transporter) {
       try {
         const info = await transporter.sendMail({
-          from: `sapthakalaa Contact <${mailFrom}>`,
+          from: `saphakalaa Contact <${mailFrom}>`,
           to: mailRecipient,
           replyTo: email,
-          subject: `[sapthakalaa Contact] ${subject}`,
+          subject: `[saphakalaa Contact] ${subject}`,
           text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\n${message}`,
           html: `
-            <h2>sapthakalaa Contact Form</h2>
+            <h2>saphakalaa Contact Form</h2>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Subject:</strong> ${subject}</p>
