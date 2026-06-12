@@ -16,7 +16,7 @@ export const publications: Publication[] = [
     title: "Adaptive Reuse Strategies for Urban Heritage",
     type: "journal",
     publication: "Journal of Urban Design",
-    author: "Dr. Omkar Sharma, Team sapthkalaa",
+    author: "Dr. Omkar Sharma, Team sapthakalaa",
     date: "March 2023",
     year: 2023,
     description: "Research on integrating modern functionality into heritage structures",
@@ -38,7 +38,7 @@ export const publications: Publication[] = [
     title: "Water Management in Climate-Resilient Cities",
     type: "article",
     publication: "Architecture Today Magazine",
-    author: "Team sapthkalaa",
+    author: "Team sapthakalaa",
     date: "June 2022",
     year: 2022,
     description: "Article exploring sustainable water systems in urban design",
@@ -73,3 +73,4 @@ export const publicationTypes = [
   { id: "conference", label: "Conference Papers", description: "Conference presentations and papers" },
   { id: "article", label: "Articles", description: "Magazine and online articles" },
 ];
+

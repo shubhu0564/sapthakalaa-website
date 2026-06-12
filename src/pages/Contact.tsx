@@ -16,8 +16,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "connect.sapthkalaa@gmail.com",
-    href: "mailto:connect.sapthkalaa@gmail.com",
+    value: "connect.sapthakalaa@gmail.com",
+    href: "mailto:connect.sapthakalaa@gmail.com",
   },
   {
     icon: Phone,
@@ -95,7 +95,7 @@ const Contact = () => {
         description:
           error instanceof Error
             ? error.message
-            : "Unable to send the message. Please try again or email connect.sapthkalaa@gmail.com directly.",
+            : "Unable to send the message. Please try again or email connect.sapthakalaa@gmail.com directly.",
       });
     } finally {
       setIsSubmitting(false);
@@ -196,7 +196,7 @@ const Contact = () => {
                     Open for Projects
                   </h3>
                   <p className="text-muted-foreground">
-                    sapthkalaa is currently accepting new projects and collaborations 
+                    sapthakalaa is currently accepting new projects and collaborations 
                     in environmental design, planning, management, visualization, 
                     and research across India.
                   </p>
@@ -323,3 +323,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

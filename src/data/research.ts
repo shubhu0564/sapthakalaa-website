@@ -33,7 +33,7 @@ export const researchPapers: ResearchPaper[] = [
   {
     id: "research-03",
     title: "Heritage Conservation in Modern Context",
-    author: "Team sapthkalaa",
+    author: "Team sapthakalaa",
     year: 2021,
     category: "paper",
     description: "Research on integrating historical preservation with contemporary functionality",
@@ -57,3 +57,4 @@ export const researchCategories = [
   { id: "study", label: "Design Studies", description: "Design research and studies" },
   { id: "paper", label: "Research Papers", description: "Published research papers" },
 ];
+

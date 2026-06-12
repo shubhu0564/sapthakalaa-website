@@ -97,7 +97,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal>
               <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                sapthkalaa's practice is informed by deep environmental research. 
+                sapthakalaa's practice is informed by deep environmental research. 
                 Our design work blends environmental planning, management, and climate-responsive architecture. 
                 We believe in creating spaces that respond to their context while serving human needs.
               </p>
@@ -187,3 +187,4 @@ const Index = () => {
 };
 
 export default Index;
+
