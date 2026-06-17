@@ -1,20 +1,22 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowDown, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ProjectCard } from "@/components/ProjectCard";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { projects } from "@/data/projects";
 import { BRAND } from "@/lib/brand";
 import logo from "@/assets/saptha..jpg";
+import featuredImage from "@/assets/fp.jpg";
 
 const Index = () => {
   const featuredProjects = projects.filter((p) => p.featured);
+  const featuredRef = useRef<HTMLElement | null>(null);
 
   const scrollToContent = () => {
-    window.scrollTo({
-      top: window.innerHeight,
+    featuredRef.current?.scrollIntoView({
       behavior: "smooth",
+      block: "start",
     });
   };
 
@@ -41,14 +43,6 @@ const Index = () => {
           >
             {BRAND.name}
           </h1>
-          
-          {/* Tagline */}
-          <p 
-            className="mt-4 text-sm md:text-base uppercase tracking-[0.3em] text-muted-foreground animate-fade-in"
-            style={{ animationDelay: "400ms" }}
-          >
-            {BRAND.tagline}
-          </p>
         </div>
 
         {/* Scroll Indicator */}
@@ -61,14 +55,48 @@ const Index = () => {
         </button>
       </section>
 
+      {/* Featured Intro Section */}
+      <ScrollReveal>
+        <section
+          ref={featuredRef}
+          className="relative overflow-hidden py-16 lg:py-24"
+        >
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-[70%_30%] lg:items-stretch">
+              <div className="overflow-hidden rounded-[2rem] lg:rounded-[3rem]">
+                <img
+                  src={featuredImage}
+                  alt="Featured architecture"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="flex items-center">
+                <div className="text-foreground">
+                  <p className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.92]">
+                    Environmental
+                  </p>
+                  <p className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.92] mt-4">
+                    Design, Planning &
+                  </p>
+                  <p className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.92] mt-4">
+                    Management
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* Projects Grid - HCP Style */}
-      <section className="py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
+      <section id="projects-section" className="py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {featuredProjects.map((project, index) => (
             <Link
               key={project.id}
               to={`/projects/${project.id}`}
-              className="group relative aspect-[4/3] overflow-hidden"
+              className="group relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-background shadow-sm"
             >
               <img
                 src={project.thumbnail}

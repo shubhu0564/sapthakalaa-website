@@ -1,4 +1,13 @@
 import innovationPark from "@/assets/innovation-park.jpg";
+import innovationParkPlan from "@/assets/00_gf plan.jpg";
+import innovationParkFirstFloor from "@/assets/01_1st plan.jpg";
+import innovationParkFp from "@/assets/fp.jpg";
+import innovationPark12 from "@/assets/12.jpg";
+import innovationPark19 from "@/assets/19.jpg";
+import innovationPark23 from "@/assets/23.jpg";
+import innovationPark24 from "@/assets/24.jpg";
+import innovationPark25 from "@/assets/25.jpg";
+import innovationPark30 from "@/assets/30.jpg";
 import publicLibrary from "@/assets/public-library.jpg";
 import virologyCenter from "@/assets/virology-center.jpg";
 import massHousing from "@/assets/mass-housing.jpg";
@@ -34,7 +43,18 @@ export const projects: Project[] = [
     description: "A dynamic innovation ecosystem designed to foster collaboration between technology startups, research institutions, and established enterprises. The campus integrates flexible workspaces, research laboratories, and collaborative zones within a landscape-driven masterplan.",
     concept: "The design emerges from the intersection of geometric clarity and organic flow. Central courtyards create microclimates while connecting various program elements. The stepped massing responds to Indore's climate, maximizing shaded areas and natural ventilation.",
     thumbnail: innovationPark,
-    images: [innovationPark, innovationPark, innovationPark],
+    images: [
+      innovationPark,
+      innovationParkPlan,
+      innovationParkFirstFloor,
+      innovationParkFp,
+      innovationPark12,
+      innovationPark19,
+      innovationPark23,
+      innovationPark24,
+      innovationPark25,
+      innovationPark30,
+    ],
     featured: true,
   },
   {

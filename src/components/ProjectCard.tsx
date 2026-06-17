@@ -24,7 +24,7 @@ export function ProjectCard({ project, index, variant = "default" }: ProjectCard
         {/* Image Container */}
         <div
           className={cn(
-            "project-card relative overflow-hidden bg-muted",
+            "project-card relative overflow-hidden bg-muted rounded-[1.25rem]",
             isFeatured && index === 0 ? "aspect-[4/3] lg:aspect-[16/10]" : "aspect-[4/3]"
           )}
         >
@@ -35,16 +35,16 @@ export function ProjectCard({ project, index, variant = "default" }: ProjectCard
             loading="lazy"
           />
 
-          {/* Hover Overlay Content */}
-          <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 lg:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <div className="text-primary-foreground transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+          {/* Overlay Content */}
+          <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 lg:p-8 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+            <div className="text-white">
               <span className="text-overline uppercase opacity-80">
                 {project.category}
               </span>
-              <h3 className="font-serif text-heading-3 mt-2">
+              <h3 className="font-serif text-heading-3 mt-2 text-white">
                 {project.title}
               </h3>
-              <p className="text-caption opacity-80 mt-1">
+              <p className="text-caption opacity-80 mt-1 text-white">
                 {project.location}
               </p>
             </div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, MapPin, Calendar, Layers, Maximize } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
@@ -8,6 +9,16 @@ import { getProjectById, projects } from "@/data/projects";
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const project = getProjectById(id || "");
+  const [activeSlide, setActiveSlide] = useState(0);
+  const galleryImages = project?.images?.filter(Boolean) ?? [];
+
+  const handlePrev = () => {
+    setActiveSlide((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNext = () => {
+    setActiveSlide((prev) => Math.min(prev + 1, galleryImages.length - 1));
+  };
 
   if (!project) {
     return <Navigate to="/projects" replace />;
@@ -114,21 +125,46 @@ const ProjectDetail = () => {
               {/* Image Gallery */}
               <ScrollReveal>
                 <h2 className="font-serif text-heading-2 mb-8">Drawings & Visuals</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {project.images.map((image, index) => (
-                    <div
-                      key={index}
-                      className={`aspect-[4/3] bg-muted overflow-hidden ${
-                        index === 0 ? "md:col-span-2" : ""
-                      }`}
-                    >
-                      <img
-                        src={image}
-                        alt={`${project.title} - View ${index + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                      />
+                <div className="relative -mx-6 lg:-mx-12">
+                  <div className="relative overflow-hidden bg-black min-h-[55vh] sm:min-h-[65vh]">
+                    <div className="absolute left-4 top-4 rounded-full bg-black/50 px-3 py-2 text-sm text-white backdrop-blur-sm">
+                      {galleryImages.length > 0 ? `${activeSlide + 1} / ${galleryImages.length}` : "0 / 0"}
                     </div>
-                  ))}
+
+                    {galleryImages.length > 0 ? (
+                      <>
+                        <img
+                          src={galleryImages[activeSlide]}
+                          alt={`${project.title} - View ${activeSlide + 1}`}
+                          className="block w-full h-full object-cover"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={handlePrev}
+                          disabled={activeSlide === 0}
+                          className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/40 text-white transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-40"
+                          aria-label="Previous image"
+                        >
+                          <ArrowLeft className="h-5 w-5" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={handleNext}
+                          disabled={activeSlide === galleryImages.length - 1}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/40 text-white transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-40"
+                          aria-label="Next image"
+                        >
+                          <ArrowRight className="h-5 w-5" />
+                        </button>
+                      </>
+                    ) : (
+                      <div className="flex h-full items-center justify-center px-6 text-sm text-white">
+                        No gallery images available.
+                      </div>
+                    )}
+                  </div>
                 </div>
               </ScrollReveal>
             </div>

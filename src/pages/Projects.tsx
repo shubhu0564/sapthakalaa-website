@@ -77,7 +77,11 @@ const Projects = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
               {filteredProjects.map((project, index) => (
                 <ScrollReveal key={project.id} delay={index * 100}>
-                  <ProjectCard project={project} index={index} />
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    variant={project.id === "innovation-park" ? "featured" : "default"}
+                  />
                 </ScrollReveal>
               ))}
             </div>

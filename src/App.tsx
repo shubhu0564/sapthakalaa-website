@@ -39,10 +39,17 @@ const App = () => (
           
           {/* Projects */}
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/architecture" element={<Projects />} />
+          <Route path="/projects/urbanism" element={<Projects />} />
+          <Route path="/projects/landscape" element={<Projects />} />
+          <Route path="/projects/conservation" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           
           {/* Research */}
           <Route path="/research" element={<Research />} />
+          <Route path="/research/papers" element={<Research />} />
+          <Route path="/research/books" element={<Research />} />
+          <Route path="/research/videos" element={<Research />} />
           <Route path="/publications" element={<Publications />} />
           
           {/* Media */}
@@ -53,12 +60,17 @@ const App = () => (
           
           {/* Studio */}
           <Route path="/studio/archive" element={<StudioArchive />} />
+          <Route path="/studio/communication" element={<StudioLibrary />} />
+          <Route path="/studio/photography" element={<StudioLibrary />} />
+          <Route path="/studio/model-making" element={<StudioLibrary />} />
+          <Route path="/studio/sketches" element={<StudioLibrary />} />
           <Route path="/studio/library" element={<StudioLibrary />} />
           <Route path="/studio/project-management" element={<StudioProjectManagement />} />
           
           {/* Practice */}
           <Route path="/practice/people" element={<PracticePeople />} />
-          <Route path="/practice/awards" element={<PracticeAwards />} />
+          <Route path="/practice/achievements" element={<PracticeAwards />} />
+          <Route path="/practice/careers" element={<PracticePeople />} />
           <Route path="/practice/contact" element={<PracticeContact />} />
           
           {/* Legacy Routes */}
