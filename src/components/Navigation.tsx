@@ -298,11 +298,10 @@ export function Navigation() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        isScrolled ? "bg-background/95 backdrop-blur-md" : "bg-background"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#FFFFFF] border-none shadow-none"
       )}
     >
-      <nav className="container mx-auto px-6 lg:px-12">
+      <nav className="container mx-auto px-6 lg:px-12 border-none">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link
             to="/"

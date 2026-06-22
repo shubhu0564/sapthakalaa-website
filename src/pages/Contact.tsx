@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Mail, Phone, MapPin, ArrowUpRight, Send, Instagram, Linkedin, Youtube } from "lucide-react";
@@ -316,8 +315,6 @@ const Contact = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Footer } from "@/components/Footer";
 import Index from "./pages/Index";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -32,11 +33,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          
+
           {/* About Section */}
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/about" element={<About />} />
-          
+
           {/* Projects */}
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/architecture" element={<Projects />} />
@@ -44,20 +45,20 @@ const App = () => (
           <Route path="/projects/landscape" element={<Projects />} />
           <Route path="/projects/conservation" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
-          
+
           {/* Research */}
           <Route path="/research" element={<Research />} />
           <Route path="/research/papers" element={<Research />} />
           <Route path="/research/books" element={<Research />} />
           <Route path="/research/videos" element={<Research />} />
           <Route path="/publications" element={<Publications />} />
-          
+
           {/* Media */}
           <Route path="/media" element={<Media />} />
-          
+
           {/* Academic */}
           <Route path="/academic" element={<Academic />} />
-          
+
           {/* Studio */}
           <Route path="/studio/archive" element={<StudioArchive />} />
           <Route path="/studio/communication" element={<StudioLibrary />} />
@@ -66,20 +67,21 @@ const App = () => (
           <Route path="/studio/sketches" element={<StudioLibrary />} />
           <Route path="/studio/library" element={<StudioLibrary />} />
           <Route path="/studio/project-management" element={<StudioProjectManagement />} />
-          
+
           {/* Practice */}
           <Route path="/practice/people" element={<PracticePeople />} />
           <Route path="/practice/achievements" element={<PracticeAwards />} />
           <Route path="/practice/careers" element={<PracticePeople />} />
           <Route path="/practice/contact" element={<PracticeContact />} />
-          
+
           {/* Legacy Routes */}
           <Route path="/experience" element={<Experience />} />
           <Route path="/contact" element={<Contact />} />
-          
+
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

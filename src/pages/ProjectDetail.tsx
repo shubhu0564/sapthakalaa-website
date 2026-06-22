@@ -11,6 +11,7 @@ const ProjectDetail = () => {
   const project = getProjectById(id || "");
   const [activeSlide, setActiveSlide] = useState(0);
   const galleryImages = project?.images?.filter(Boolean) ?? [];
+  const descriptionParagraphs = project?.description.split("\n\n").filter(Boolean) ?? [];
 
   const handlePrev = () => {
     setActiveSlide((prev) => Math.max(prev - 1, 0));
@@ -109,9 +110,13 @@ const ProjectDetail = () => {
               {/* Description */}
               <ScrollReveal>
                 <h2 className="font-serif text-heading-2 mb-6">Project Overview</h2>
-                <p className="text-body-lg text-muted-foreground leading-relaxed">
-                  {project.description}
-                </p>
+                <div className="space-y-6 text-body-lg text-muted-foreground leading-relaxed">
+                  {descriptionParagraphs.map((paragraph, index) => (
+                    <p key={index} className="text-justify">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </ScrollReveal>
 
               {/* Concept */}
@@ -175,7 +180,7 @@ const ProjectDetail = () => {
                 <div className="sticky top-32 space-y-8">
                   <div className="p-8 bg-card border border-border">
                     <h3 className="font-serif text-heading-3 mb-6">Project Details</h3>
-                    <dl className="space-y-4 text-sm">
+                    <dl className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
                       <div>
                         <dt className="text-muted-foreground">Type</dt>
                         <dd className="mt-1 font-medium">{project.category}</dd>
@@ -207,6 +212,17 @@ const ProjectDetail = () => {
                         </div>
                       )}
                     </dl>
+
+                    {project.info && (
+                      <div className="mt-6 grid grid-cols-1 gap-4 border-t border-border pt-6 sm:grid-cols-2">
+                        {project.info.map((item) => (
+                          <div key={item.label}>
+                            <dt className="text-muted-foreground">{item.label}</dt>
+                            <dd className="mt-1 font-medium">{item.value}</dd>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </ScrollReveal>

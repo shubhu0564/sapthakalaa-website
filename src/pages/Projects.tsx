@@ -94,8 +94,6 @@ const Projects = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

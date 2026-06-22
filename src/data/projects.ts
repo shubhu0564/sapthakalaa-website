@@ -27,6 +27,10 @@ export interface Project {
   thumbnail: string;
   images: string[];
   featured: boolean;
+  info?: Array<{
+    label: string;
+    value: string;
+  }>;
 }
 
 export const projects: Project[] = [
@@ -40,7 +44,7 @@ export const projects: Project[] = [
     category: "Institutional",
     siteArea: "25,000 sq.m",
     builtUpArea: "18,500 sq.m",
-    description: "A dynamic innovation ecosystem designed to foster collaboration between technology startups, research institutions, and established enterprises. The campus integrates flexible workspaces, research laboratories, and collaborative zones within a landscape-driven masterplan.",
+    description: "Innovation Park is envisioned as an integrated Exhibition, Convention, Information Technology Park, and Start-up Hub that addresses the growing need for world-class infrastructure in emerging Indian cities.\n\nIndia currently lacks integrated international-standard facilities capable of meeting the requirements of global exhibition and convention operators in terms of space, flexibility, accessibility, transportation, and supporting infrastructure. While a few organized convention centers exist in major metropolitan cities such as Mumbai, Delhi, and Chennai, similar facilities are largely absent in rapidly developing cities like Indore.\n\nThe project explores the potential of creating a comprehensive Innovation Park that combines exhibition spaces, convention facilities, IT offices, research environments, and start-up incubation spaces within a single development. Beyond serving as an event venue, the proposal positions the Innovation Park as an important catalyst for urban development and economic growth.\n\nThe design focuses on creating a world-class destination while respecting the regional architectural identity of the site. The proposal integrates sustainable planning principles, public spaces, advanced infrastructure, and international-quality amenities to support innovation, entrepreneurship, business, and knowledge exchange.\n\nThe expected outcome of the project is to strengthen the regional start-up ecosystem, encourage business development, expand the MICE (Meetings, Incentives, Conferences and Exhibitions) industry, promote tourism, and create stronger connections between international industries and local communities. Ultimately, the Innovation Park contributes to economic development and supports India's long-term growth in business, technology, and innovation.",
     concept: "The design emerges from the intersection of geometric clarity and organic flow. Central courtyards create microclimates while connecting various program elements. The stepped massing responds to Indore's climate, maximizing shaded areas and natural ventilation.",
     thumbnail: innovationPark,
     images: [
@@ -56,6 +60,15 @@ export const projects: Project[] = [
       innovationPark30,
     ],
     featured: true,
+    info: [
+      { label: "Client", value: "Indore Development Authority (IDA)" },
+      { label: "Location", value: "Village Awalkhed, Igatpuri, Maharashtra" },
+      { label: "Year", value: "2009–2011" },
+      { label: "Area", value: "8,500 sq ft" },
+      { label: "Structural Consultant", value: "Ruikar & Associates" },
+      { label: "Photography", value: "Atul Kanetkar Photography" },
+      { label: "Project Team", value: "Prachi Nikam, Amruta Bhagwat, Cressida Fonseca, Khushru Irani" },
+    ],
   },
   {
     id: "public-library",

@@ -95,9 +95,17 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     font-feature-settings: "kern" 1, "liga" 1;
     font-family: "Century Gothic", "CenturyGothic", "AppleGothic", sans-serif;
+  }
+
+  html,
+  #root {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
   }
 
   /* Typography refinements */

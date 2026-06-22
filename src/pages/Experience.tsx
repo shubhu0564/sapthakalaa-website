@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Award, Briefcase, Trophy } from "lucide-react";
@@ -172,8 +171,6 @@ const Experience = () => {
           </ScrollReveal>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

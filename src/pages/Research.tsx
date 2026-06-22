@@ -77,7 +77,6 @@ export default function Research() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

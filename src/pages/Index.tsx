@@ -1,53 +1,63 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { projects } from "@/data/projects";
-import { BRAND } from "@/lib/brand";
-import logo from "@/assets/saptha..jpg";
+import heroCenterImage from "@/assets/sapthaklaa name.jpg";
 import featuredImage from "@/assets/fp.jpg";
+import innovationParkImage from "@/assets/innovation-park.jpg";
+import publicLibraryImage from "@/assets/public-library.jpg";
+
+const editorialSections = [
+  {
+    title: "Architecture",
+    description:
+      "Sapthakalaa approaches architecture as a dialogue between people, culture, climate, and place. Our work ranges from residential, institutional, and public projects to adaptive reuse and landscape-integrated developments. Through context-sensitive design, we create environments that are functional, sustainable, and deeply connected to their surroundings.",
+    image: featuredImage,
+    href: "/projects",
+  },
+  {
+    title: "Urbanism",
+    description:
+      "Sapthakalaa's urbanism projects span urban design, planning, landscape strategies, and community-based development. We work across neighbourhoods, public spaces, settlements, and cultural landscapes, integrating environmental systems, social needs, and local identities to create resilient and inclusive places for present and future generations.",
+    image: innovationParkImage,
+    href: "/projects/urbanism",
+  },
+  {
+    title: "Research & Publication",
+    description:
+      "Research is central to Sapthakalaa's practice. Through mapping, documentation, field studies, spatial analysis, and publications, we investigate the relationships between people, culture, ecology, and the built environment. Our research informs design decisions while contributing to broader discussions on architecture, urbanism, heritage, and environmental stewardship.",
+    image: publicLibraryImage,
+    href: "/research",
+  },
+];
 
 const Index = () => {
-  const featuredProjects = projects.filter((p) => p.featured);
-  const featuredRef = useRef<HTMLElement | null>(null);
-
-  const scrollToContent = () => {
-    featuredRef.current?.scrollIntoView({
+  const scrollToEnvironmental = () => {
+    document.getElementById("environmental-section")?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ background: "#ffffff", backgroundColor: "#ffffff" }}>
       <Navigation />
 
       {/* Hero Section - HCP Style */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          {/* Logo */}
-          <div className="mb-8 animate-fade-in">
-            <img
-              src={logo}
-              alt={`${BRAND.name} logo`}
-              className="mx-auto h-24 w-24 lg:h-32 lg:w-32 object-contain"
-            />
-          </div>
-
-          {/* Studio Name */}
-          <h1 
-            className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight text-foreground animate-fade-in"
-            style={{ animationDelay: "200ms" }}
-          >
-            {BRAND.name}
-          </h1>
+      <section
+        className="relative min-h-screen flex items-center justify-center"
+        style={{ background: "#ffffff", backgroundColor: "#ffffff" }}
+      >
+        <div className="animate-fade-in flex w-full items-center justify-center px-6">
+          <img
+            src={heroCenterImage}
+            alt="Sapthakalaa"
+            className="h-auto max-w-[500px] object-contain sm:max-w-[560px] lg:max-w-[600px]"
+          />
         </div>
 
         {/* Scroll Indicator */}
         <button
-          onClick={scrollToContent}
+          onClick={scrollToEnvironmental}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-foreground transition-colors animate-fade-in"
           style={{ animationDelay: "600ms" }}
         >
@@ -55,164 +65,73 @@ const Index = () => {
         </button>
       </section>
 
-      {/* Featured Intro Section */}
-      <ScrollReveal>
-        <section
-          ref={featuredRef}
-          className="relative overflow-hidden py-16 lg:py-24"
-        >
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-[70%_30%] lg:items-stretch">
-              <div className="overflow-hidden rounded-[2rem] lg:rounded-[3rem]">
-                <img
-                  src={featuredImage}
-                  alt="Featured architecture"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div className="flex items-center">
-                <div className="text-foreground">
-                  <p className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.92]">
-                    Environmental
-                  </p>
-                  <p className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.92] mt-4">
-                    Design, Planning &
-                  </p>
-                  <p className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.92] mt-4">
-                    Management
-                  </p>
-                </div>
-              </div>
+      {/* New Environmental Section Below Hero */}
+      <section
+        id="environmental-section"
+        className="w-full"
+        style={{ background: "#ffffff", backgroundColor: "#ffffff" }}
+      >
+        <div className="mx-auto grid min-h-[420px] max-w-7xl items-start gap-8 px-6 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.6fr_0.9fr] lg:px-10 lg:py-24">
+          <div className="overflow-hidden">
+            <img
+              src={featuredImage}
+              alt="Environmental Design, Planning & Management"
+              className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[560px]"
+            />
+          </div>
+          <div className="flex items-start justify-center lg:justify-start">
+            <div className="max-w-xl text-center lg:text-left">
+              <h2 className="font-serif text-2
+              xl font-bold leading-tight tracking-[-0.02em] text-[#211911] sm:text-3xl lg:text-[2rem]">
+                Environmental Design, Planning & Management
+              </h2>
+              <p className="mt-6 text-base leading-7 text-[#211911] sm:text-[1rem] lg:text-[1.05rem]">
+                At Sapthakalaa, we believe design has the power to reconnect people, culture, and ecology. Through an approach centred on climate, culture, and community resilience, we integrate architecture, urbanism, and environmental thinking to shape places that are rooted in context, responsive to change, and meaningful to the communities they serve. Our work aspires to create lasting value while contributing to a more resilient and sustainable future.
+              </p>
             </div>
           </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Projects Grid - HCP Style */}
-      <section id="projects-section" className="py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {featuredProjects.map((project, index) => (
-            <Link
-              key={project.id}
-              to={`/projects/${project.id}`}
-              className="group relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-background shadow-sm"
-            >
-              <img
-                src={project.thumbnail}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-all duration-500" />
-              <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12">
-                <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                  <h3 className="font-serif text-2xl lg:text-3xl text-white mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-white/80 uppercase tracking-widest">
-                    {project.location}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-24 lg:py-32 bg-background">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <ScrollReveal>
-              <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                sapthakalaa's practice is informed by deep environmental research. 
-                Our design work blends environmental planning, management, and climate-responsive architecture. 
-                We believe in creating spaces that respond to their context while serving human needs.
-              </p>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={200}>
+      {/* Editorial Sections */}
+      <section id="homepage-sections" className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+          <div className="space-y-20 sm:space-y-24 lg:space-y-28">
+            {editorialSections.map((section, index) => (
               <Link
-                to="/about"
-                className="inline-flex items-center gap-2 mt-10 text-sm uppercase tracking-widest text-foreground hover:text-muted-foreground transition-colors"
+                key={section.title}
+                to={section.href}
+                className="group block cursor-pointer"
+                id={index === 0 ? "architecture-section" : undefined}
               >
-                Learn More
-                <ArrowRight className="w-4 h-4" />
+                <div className="grid items-start gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.95fr)]">
+                  <div className="overflow-hidden">
+                    <img
+                      src={section.image}
+                      alt={section.title}
+                      className="h-[320px] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-[420px] lg:h-[520px]"
+                    />
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="max-w-xl">
+                      <h3 className="font-serif text-2xl font-bold leading-tight tracking-[-0.02em] text-[#211911] sm:text-3xl lg:text-[2rem]">
+                        {section.title}
+                      </h3>
+                      <p className="mt-4 text-base leading-7 text-[#211911] sm:text-[1rem] lg:text-[1.05rem]">
+                        {section.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </Link>
-            </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="border-t border-border">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              title: "Architecture",
-              description: "From concept to completion, designing spaces that inspire and endure.",
-              href: "/projects",
-            },
-            {
-              title: "Environmental Design",
-              description: "Climate-responsive solutions that harmonize with their surroundings.",
-              href: "/projects",
-            },
-            {
-              title: "Research",
-              description: "Deep site studies and environmental analysis informing every project.",
-              href: "/about",
-            },
-            {
-              title: "Visualization",
-              description: "Bringing architectural visions to life through models and renders.",
-              href: "/projects",
-            },
-          ].map((service, index) => (
-            <ScrollReveal key={service.title} delay={index * 100}>
-              <Link
-                to={service.href}
-                className="group block p-8 lg:p-12 border-b md:border-r border-border last:border-r-0 hover:bg-card transition-colors duration-300"
-              >
-                <h3 className="font-serif text-xl mb-4 group-hover:text-accent transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-                <ArrowRight className="w-4 h-4 mt-6 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-300" />
-              </Link>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section className="py-24 lg:py-32 bg-card">
-        <div className="container mx-auto px-6 lg:px-12 text-center">
-          <ScrollReveal>
-            <h2 className="font-serif text-3xl lg:text-4xl mb-6">
-              Let's Work Together
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto mb-10">
-              Open to collaborations, projects, and opportunities. 
-              Based in Mumbai, available across India.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-3 bg-foreground text-background px-8 py-4 text-sm uppercase tracking-widest hover:bg-accent transition-colors duration-300"
-            >
-              Get in Touch
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <Footer />
     </div>
   );
 };
 
 export default Index;
-
