@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import heroCenterImage from "@/assets/sapthaklaa name.jpg";
-import featuredImage from "@/assets/fp.jpg";
-import innovationParkImage from "@/assets/innovation-park.jpg";
-import publicLibraryImage from "@/assets/public-library.jpg";
+import featuredImage from "@/assets/ARCHITECTURE.jpg";
+import innovationParkImage from "@/assets/URBANISM.jpg";
+import publicLibraryImage from "@/assets/RESEARCH & PUBLICATION.jpg";
+import environmentalImage from "@/assets/ENV DESIGN PLANNING MANAGEMENT.jpg";
 
 const editorialSections = [
   {
@@ -71,21 +72,20 @@ const Index = () => {
         className="w-full"
         style={{ background: "#ffffff", backgroundColor: "#ffffff" }}
       >
-        <div className="mx-auto grid min-h-[420px] max-w-7xl items-start gap-8 px-6 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.6fr_0.9fr] lg:px-10 lg:py-24">
+        <div className="mx-auto grid min-h-[320px] max-w-7xl items-center gap-6 px-6 py-10 sm:px-8 sm:py-12 lg:grid-cols-[1.6fr_0.95fr] lg:px-10 lg:py-14">
           <div className="overflow-hidden">
             <img
-              src={featuredImage}
+              src={environmentalImage}
               alt="Environmental Design, Planning & Management"
-              className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[560px]"
+              className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[420px]"
             />
           </div>
-          <div className="flex items-start justify-center lg:justify-start">
-            <div className="max-w-xl text-center lg:text-left">
-              <h2 className="font-serif text-2
-              xl font-bold leading-tight tracking-[-0.02em] text-[#211911] sm:text-3xl lg:text-[2rem]">
+          <div className="flex items-center justify-start">
+            <div className="max-w-[30rem] text-left">
+              <h2 className="font-serif text-2xl font-bold leading-tight tracking-[-0.02em] text-[#211911] sm:text-3xl lg:text-[2rem]">
                 Environmental Design, Planning & Management
               </h2>
-              <p className="mt-6 text-base leading-7 text-[#211911] sm:text-[1rem] lg:text-[1.05rem]">
+              <p className="mt-5 text-base leading-7 text-[#211911] sm:text-[1rem] lg:text-[1.05rem]">
                 At Sapthakalaa, we believe design has the power to reconnect people, culture, and ecology. Through an approach centred on climate, culture, and community resilience, we integrate architecture, urbanism, and environmental thinking to shape places that are rooted in context, responsive to change, and meaningful to the communities they serve. Our work aspires to create lasting value while contributing to a more resilient and sustainable future.
               </p>
             </div>
@@ -96,7 +96,7 @@ const Index = () => {
       {/* Editorial Sections */}
       <section id="homepage-sections" className="bg-white">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
-          <div className="space-y-20 sm:space-y-24 lg:space-y-28">
+          <div className="space-y-10 sm:space-y-12 lg:space-y-14">
             {editorialSections.map((section, index) => (
               <Link
                 key={section.title}
@@ -104,17 +104,17 @@ const Index = () => {
                 className="group block cursor-pointer"
                 id={index === 0 ? "architecture-section" : undefined}
               >
-                <div className="grid items-start gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.95fr)]">
+                <div className="grid items-center gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.95fr)]">
                   <div className="overflow-hidden">
                     <img
                       src={section.image}
                       alt={section.title}
-                      className="h-[320px] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-[420px] lg:h-[520px]"
+                      className="h-[280px] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-[340px] lg:h-[420px]"
                     />
                   </div>
 
-                  <div className="flex items-start">
-                    <div className="max-w-xl">
+                  <div className="flex items-center">
+                    <div className="max-w-[30rem]">
                       <h3 className="font-serif text-2xl font-bold leading-tight tracking-[-0.02em] text-[#211911] sm:text-3xl lg:text-[2rem]">
                         {section.title}
                       </h3>

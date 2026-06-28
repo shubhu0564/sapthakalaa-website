@@ -1,81 +1,78 @@
-import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Instagram, Linkedin, Youtube, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const socialLinks = [
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/ar-rd-omkar-madhav-595a4b297?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    href: "https://www.linkedin.com/company/sapthakalaa/",
     icon: Linkedin,
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/saptha7799/",
+    href: "https://www.instagram.com/sapthakalaa/",
     icon: Instagram,
   },
   {
-    label: "Facebook",
-    href: "https://www.facebook.com",
-    icon: Facebook,
+    label: "YouTube",
+    href: "https://www.youtube.com/channel/UC5ahbS6HcySAQgvpaBWK4mA",
+    icon: Youtube,
+  },
+  {
+    label: "Email",
+    href: "mailto:connect.sapthakalaa@gmail.com",
+    icon: Mail,
   },
 ];
 
 const footerLinks = [
-  { label: "Careers", href: "/contact" },
-  { label: "Contact", href: "/contact" },
-  { label: "Terms & Conditions", href: "/contact" },
+  { label: "Careers", href: "/practice/careers" },
+  { label: "Contact", href: "/practice/contact" },
+  { label: "Terms & Conditions", href: "/terms" },
 ];
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <footer className="bg-[#A79C73] pt-2">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-2 flex justify-end">
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-1 text-sm uppercase tracking-[0.3em] text-[#FFFFFF] transition-colors duration-300 hover:text-[#F5F1D8]"
-          >
-            Top <span>↑</span>
-          </button>
-        </div>
+    <footer className="mt-12 bg-[#A79C73] sm:mt-16 lg:mt-20">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
 
-        <div className="flex h-[50px] items-center justify-between border-t border-[#FFFFFF]/10">
-          <div className="flex items-center gap-3">
-            {socialLinks.map((item) => {
-              const Icon = item.icon;
-              return (
-                <a
+        <div className="mx-auto flex w-full max-w-4xl justify-center border-t border-white/20 pt-5 sm:pt-6">
+          <div className="flex w-full flex-col items-center justify-between gap-8 py-5 md:flex-row md:gap-10">
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-7">
+              {socialLinks.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.label === "Email" ? "_self" : "_blank"}
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition duration-300 hover:scale-110 hover:bg-gray-100"
+                  >
+                    <Icon size={20} strokeWidth={2} />
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Footer Navigation */}
+            <nav className="flex flex-wrap items-center justify-center gap-10 lg:gap-14">
+              {footerLinks.map((item) => (
+                <Link
                   key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={item.label}
-                  className="inline-flex h-8 w-8 items-center justify-center text-[#FFFFFF] transition-colors duration-300 hover:text-[#F5F1D8]"
+                  to={item.href}
+                  className="text-[13px] font-medium uppercase tracking-[0.25em] text-white transition hover:text-gray-200"
                 >
-                  <Icon size={16} />
-                </a>
-              );
-            })}
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
           </div>
 
-          <nav className="flex items-center gap-4 sm:gap-6">
-            {footerLinks.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                className="text-xs uppercase tracking-[0.25em] text-[#FFFFFF] transition-colors duration-300 hover:text-[#F5F1D8]"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
         </div>
       </div>
     </footer>

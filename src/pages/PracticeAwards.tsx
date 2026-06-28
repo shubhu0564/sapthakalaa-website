@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { AwardCard } from "@/components/AwardCard";
 import { awards, awardCategories } from "@/data/awards";
 import { useState } from "react";
@@ -98,7 +97,6 @@ export default function PracticeAwards() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

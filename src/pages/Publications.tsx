@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { PublicationCard } from "@/components/PublicationCard";
 import { publications } from "@/data/publications";
 import { useState } from "react";
@@ -88,7 +87,6 @@ export default function Publications() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

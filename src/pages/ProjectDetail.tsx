@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, MapPin, Calendar, Layers, Maximize } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { getProjectById, projects } from "@/data/projects";
 
@@ -270,7 +269,6 @@ const ProjectDetail = () => {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 };

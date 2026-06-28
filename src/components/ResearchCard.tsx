@@ -1,5 +1,5 @@
 import { ResearchPaper } from "@/data/research";
-import { Download } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 
 interface ResearchCardProps {
   paper: ResearchPaper;
@@ -46,14 +46,25 @@ export function ResearchCard({ paper }: ResearchCardProps) {
         </p>
 
         {paper.pdfUrl && (
-          <a
-            href={paper.pdfUrl}
-            download
-            className="inline-flex items-center gap-2 text-xs font-medium text-accent hover:text-foreground transition-colors pt-2"
-          >
-            <Download size={14} />
-            Download PDF
-          </a>
+          <div className="flex gap-3 pt-4">
+            <a
+              href={paper.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-medium text-accent hover:text-foreground transition-colors"
+            >
+              <ExternalLink size={14} />
+              View PDF
+            </a>
+            <a
+              href={paper.pdfUrl}
+              download
+              className="inline-flex items-center gap-2 text-xs font-medium text-accent hover:text-foreground transition-colors"
+            >
+              <Download size={14} />
+              Download PDF
+            </a>
+          </div>
         )}
       </div>
     </div>

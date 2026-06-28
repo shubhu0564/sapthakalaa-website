@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { Archive } from "lucide-react";
 
 export default function StudioArchive() {
@@ -90,7 +89,6 @@ export default function StudioArchive() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

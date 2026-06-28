@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Footer } from "@/components/Footer";
 import Index from "./pages/Index";
 import Projects from "./pages/Projects";
@@ -24,6 +25,33 @@ import PracticeContact from "./pages/PracticeContact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+const ScrollToTopButton = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      setVisible(window.scrollY > 300);
+    };
+
+    toggleVisibility();
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className="fixed bottom-4 right-4 z-50 inline-flex items-center gap-2 rounded-full border border-[#A79C73]/30 bg-[#A79C73] px-4 py-2 text-sm font-medium uppercase tracking-[0.25em] text-white shadow-lg transition hover:bg-[#8f825c] md:bottom-6 md:right-6"
+      aria-label="Scroll to top"
+    >
+      Top <span>↑</span>
+    </button>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -82,6 +110,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <ScrollToTopButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

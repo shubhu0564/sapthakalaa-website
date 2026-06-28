@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { BookOpen, BookMarked } from "lucide-react";
 
 export default function StudioLibrary() {
@@ -100,7 +99,6 @@ export default function StudioLibrary() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

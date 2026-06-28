@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 
 export default function AboutUs() {
   return (
@@ -101,7 +100,6 @@ export default function AboutUs() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

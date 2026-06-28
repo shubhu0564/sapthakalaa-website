@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 
 export default function StudioProjectManagement() {
@@ -134,7 +133,6 @@ export default function StudioProjectManagement() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

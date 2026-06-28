@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { Youtube, Instagram, ExternalLink } from "lucide-react";
 
 export default function Media() {
@@ -109,7 +108,6 @@ export default function Media() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

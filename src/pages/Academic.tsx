@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { BookOpen } from "lucide-react";
 
 export default function Academic() {
@@ -66,7 +65,6 @@ export default function Academic() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

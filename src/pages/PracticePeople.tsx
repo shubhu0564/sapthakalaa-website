@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { TeamCard } from "@/components/TeamCard";
 import { teamMembers } from "@/data/team";
 
@@ -84,7 +83,6 @@ export default function PracticePeople() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

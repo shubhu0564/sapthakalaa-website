@@ -155,7 +155,6 @@ export function Navigation() {
   const [hoveredSection, setHoveredSection] = useState<string>("projects");
   const location = useLocation();
   const navigate = useNavigate();
-  const isHomePage = location.pathname === "/";
 
   const searchIndex: SearchItem[] = useMemo(() => {
     const pageItems = navItems.map((item) => ({
@@ -313,98 +312,8 @@ export function Navigation() {
             </span>
           </Link>
 
-          {!isHomePage ? (
-            <div className="hidden md:flex items-center gap-8 lg:gap-10">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(
-                    "font-sans text-sm tracking-wide transition-colors duration-300",
-                    location.pathname === item.href
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-
-              <div className="relative">
-                <button
-                  onClick={() => setSearchOpen((prev) => !prev)}
-                  className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Open search"
-                >
-                  <Search size={18} />
-                </button>
-
-                {searchOpen && (
-                  <div className="absolute right-0 top-full mt-3 w-[340px] rounded-[28px] border border-border bg-card p-4 shadow-2xl shadow-foreground/10">
-                    <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
-                      <input
-                        type="search"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search architecture, research, library..."
-                        className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm text-foreground outline-none focus:border-accent"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchOpen(false);
-                          setSearchQuery("");
-                        }}
-                        className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-                        aria-label="Close search"
-                      >
-                        <X size={18} />
-                      </button>
-                    </form>
-
-                    <div className="mt-4 max-h-72 overflow-y-auto pr-1">
-                      {searchQuery.trim().length === 0 ? (
-                        <p className="text-sm text-muted-foreground">
-                          Type to filter projects, research, studio library, and archive.
-                        </p>
-                      ) : filteredResults.length > 0 ? (
-                        <div className="space-y-2">
-                          {filteredResults.slice(0, 6).map((item) => (
-                            <button
-                              key={item.id}
-                              type="button"
-                              onClick={() => {
-                                navigate(item.href);
-                                setSearchOpen(false);
-                                setSearchQuery("");
-                              }}
-                              className="w-full rounded-3xl border border-border bg-background px-4 py-3 text-left text-sm text-foreground transition-colors hover:bg-muted"
-                            >
-                              <span className="block font-medium">{item.title}</span>
-                              <span className="block text-xs text-muted-foreground">
-                                {item.subtitle} • {item.category}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">No results found.</p>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <button
-                onClick={() => setIsOpen((prev) => !prev)}
-                className="p-2 text-foreground"
-                aria-label="Toggle menu"
-              >
-                <Menu size={20} />
-              </button>
-            </div>
-          ) : (
-            <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
+            <div className="relative">
               <button
                 onClick={() => setSearchOpen((prev) => !prev)}
                 className="p-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -412,15 +321,71 @@ export function Navigation() {
               >
                 <Search size={18} />
               </button>
-              <button
-                onClick={() => setIsOpen((prev) => !prev)}
-                className="p-2 text-foreground"
-                aria-label="Toggle menu"
-              >
-                <Menu size={20} />
-              </button>
+
+              {searchOpen && (
+                <div className="absolute right-0 top-full mt-3 w-[340px] rounded-[28px] border border-border bg-card p-4 shadow-2xl shadow-foreground/10">
+                  <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
+                    <input
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search architecture, research, library..."
+                      className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm text-foreground outline-none focus:border-accent"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchOpen(false);
+                        setSearchQuery("");
+                      }}
+                      className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+                      aria-label="Close search"
+                    >
+                      <X size={18} />
+                    </button>
+                  </form>
+
+                  <div className="mt-4 max-h-72 overflow-y-auto pr-1">
+                    {searchQuery.trim().length === 0 ? (
+                      <p className="text-sm text-muted-foreground">
+                        Type to filter projects, research, studio library, and archive.
+                      </p>
+                    ) : filteredResults.length > 0 ? (
+                      <div className="space-y-2">
+                        {filteredResults.slice(0, 6).map((item) => (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => {
+                              navigate(item.href);
+                              setSearchOpen(false);
+                              setSearchQuery("");
+                            }}
+                            className="w-full rounded-3xl border border-border bg-background px-4 py-3 text-left text-sm text-foreground transition-colors hover:bg-muted"
+                          >
+                            <span className="block font-medium">{item.title}</span>
+                            <span className="block text-xs text-muted-foreground">
+                              {item.subtitle} • {item.category}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No results found.</p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+
+            <button
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="p-2 text-foreground"
+              aria-label="Toggle menu"
+            >
+              <Menu size={20} />
+            </button>
+          </div>
 
           <div className="flex md:hidden items-center gap-2">
             <button
