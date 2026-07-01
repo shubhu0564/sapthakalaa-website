@@ -23,9 +23,9 @@ const editorialSections = [
     href: "/projects/urbanism",
   },
   {
-    title: "Research & Publication",
+    title: "Research & Publications",
     description:
-      "Research is central to Sapthakalaa's practice. Through mapping, documentation, field studies, spatial analysis, and publications, we investigate the relationships between people, culture, ecology, and the built environment. Our research informs design decisions while contributing to broader discussions on architecture, urbanism, heritage, and environmental stewardship.",
+      "At Sapthakalaa, research extends beyond documentation to become a tool for understanding places and shaping their future. Through interdisciplinary inquiry, publications, and knowledge-sharing, we explore emerging challenges and opportunities in architecture, urbanism, culture, ecology, and environmental resilience.",
     image: publicLibraryImage,
     href: "/research",
   },
@@ -45,10 +45,10 @@ const Index = () => {
 
       {/* Hero Section - HCP Style */}
       <section
-        className="relative min-h-screen flex items-center justify-center"
+        className="relative -mt-16 flex min-h-screen items-center justify-center lg:-mt-20"
         style={{ background: "#ffffff", backgroundColor: "#ffffff" }}
       >
-        <div className="animate-fade-in flex w-full items-center justify-center px-6">
+        <div className="animate-fade-in flex h-full w-full items-center justify-center px-6">
           <img
             src={heroCenterImage}
             alt="Sapthakalaa"

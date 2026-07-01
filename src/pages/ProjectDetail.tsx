@@ -1,269 +1,312 @@
-import { useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, MapPin, Calendar, Layers, Maximize } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { getProjectById, projects } from "@/data/projects";
+import { getProjectById } from "@/data/projects";
+
+const drawingLabels = ["Site Plan", "Ground Floor Plan", "First Floor Plan", "Section A", "Section B"];
+
+const getBreadcrumbCategory = (category: string) => {
+  const normalizedCategory = category.toLowerCase();
+
+  if (normalizedCategory.includes("urban")) {
+    return "Urbanism";
+  }
+
+  if (normalizedCategory.includes("landscape")) {
+    return "Landscape";
+  }
+
+  if (normalizedCategory.includes("conservation")) {
+    return "Conservation";
+  }
+
+  if (normalizedCategory.includes("research")) {
+    return "Research Paper";
+  }
+
+  return "Architecture";
+};
+
+const getBreadcrumbHref = (category: string) => {
+  const normalizedCategory = category.toLowerCase();
+
+  if (normalizedCategory.includes("urban")) {
+    return "/projects/urbanism";
+  }
+
+  if (normalizedCategory.includes("landscape")) {
+    return "/projects/landscape";
+  }
+
+  if (normalizedCategory.includes("conservation")) {
+    return "/projects/conservation";
+  }
+
+  if (normalizedCategory.includes("research")) {
+    return "/research";
+  }
+
+  return "/projects/architecture";
+};
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const project = getProjectById(id || "");
-  const [activeSlide, setActiveSlide] = useState(0);
-  const galleryImages = project?.images?.filter(Boolean) ?? [];
+  const galleryImages = useMemo(() => (project?.images ?? []).filter(Boolean), [project?.images]);
   const descriptionParagraphs = project?.description.split("\n\n").filter(Boolean) ?? [];
+  const breadcrumbCategory = project ? getBreadcrumbCategory(project.category) : "Architecture";
+  const breadcrumbHref = project ? getBreadcrumbHref(project.category) : "/projects/architecture";
+  const breadcrumbTitle = project ? `${project.title} at ${project.location.split(",")[0]}` : "";
+  const drawingsTrackRef = useRef<HTMLDivElement | null>(null);
+  const autoScrollFrameRef = useRef<number | null>(null);
+  const autoScrollDelayRef = useRef<number | null>(null);
+  const isHoveringRef = useRef(false);
+  const [activeDrawingIndex, setActiveDrawingIndex] = useState(0);
 
-  const handlePrev = () => {
-    setActiveSlide((prev) => Math.max(prev - 1, 0));
+  const projectDrawings = useMemo(
+    () =>
+      galleryImages.slice(0, drawingLabels.length).map((image, index) => ({
+        image,
+        label: drawingLabels[index],
+      })),
+    [galleryImages]
+  );
+
+  const scrollToDrawing = (index: number) => {
+    const track = drawingsTrackRef.current;
+    const items = track?.querySelectorAll<HTMLElement>("[data-drawing-slide]");
+
+    if (!track || !items?.length) {
+      return;
+    }
+
+    const boundedIndex = ((index % projectDrawings.length) + projectDrawings.length) % projectDrawings.length;
+    items[boundedIndex]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    setActiveDrawingIndex(boundedIndex);
   };
 
-  const handleNext = () => {
-    setActiveSlide((prev) => Math.min(prev + 1, galleryImages.length - 1));
-  };
+  useEffect(() => {
+    const track = drawingsTrackRef.current;
+    if (!track || projectDrawings.length <= 1) {
+      return;
+    }
+
+    const slideWidth = () => track.clientWidth || 1;
+    const loopBoundary = () => slideWidth() * projectDrawings.length;
+
+    const step = () => {
+      if (isHoveringRef.current) {
+        autoScrollFrameRef.current = window.requestAnimationFrame(step);
+        return;
+      }
+
+      track.scrollLeft += Math.max(slideWidth() / 420, 0.8);
+
+      if (track.scrollLeft >= loopBoundary()) {
+        track.scrollLeft = track.scrollLeft - loopBoundary();
+      }
+
+      autoScrollFrameRef.current = window.requestAnimationFrame(step);
+    };
+
+    autoScrollDelayRef.current = window.setTimeout(() => {
+      autoScrollFrameRef.current = window.requestAnimationFrame(step);
+    }, 1800);
+
+    return () => {
+      if (autoScrollDelayRef.current) {
+        window.clearTimeout(autoScrollDelayRef.current);
+      }
+      if (autoScrollFrameRef.current) {
+        window.cancelAnimationFrame(autoScrollFrameRef.current);
+      }
+    };
+  }, [projectDrawings.length]);
+
+  useEffect(() => {
+    const track = drawingsTrackRef.current;
+    if (!track) {
+      return;
+    }
+
+    const handleScroll = () => {
+      const slideWidth = track.clientWidth || 1;
+      const nextIndex = Math.round(track.scrollLeft / slideWidth) % Math.max(projectDrawings.length, 1);
+      setActiveDrawingIndex(nextIndex);
+
+      if (projectDrawings.length > 0 && track.scrollLeft >= slideWidth * projectDrawings.length) {
+        track.scrollLeft -= slideWidth * projectDrawings.length;
+      }
+    };
+
+    track.addEventListener("scroll", handleScroll, { passive: true });
+    return () => track.removeEventListener("scroll", handleScroll);
+  }, [projectDrawings.length]);
+
+  const infoItems = [
+    { label: "Year", value: project?.year ?? "—" },
+    {
+      label: "Client",
+      value: project?.info?.find((item) => item.label === "Client")?.value ?? "—",
+    },
+    { label: "Typology", value: project?.category ?? "—" },
+    {
+      label: "Area",
+      value:
+        project?.info?.find((item) => item.label === "Area")?.value ??
+        project?.builtUpArea ??
+        project?.siteArea ??
+        "—",
+    },
+    {
+      label: "Status",
+      value: project?.info?.find((item) => item.label === "Status")?.value ?? "—",
+    },
+  ];
 
   if (!project) {
     return <Navigate to="/projects" replace />;
   }
 
-  // Get adjacent projects for navigation
-  const currentIndex = projects.findIndex((p) => p.id === id);
-  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
-  const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero */}
-      <section className="pt-24 lg:pt-32">
-        <div className="container mx-auto px-6 lg:px-12">
-          {/* Back Link */}
-          <ScrollReveal>
-            <Link
-              to="/projects"
-              className="group inline-flex items-center gap-2 text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors duration-300 mb-12"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
-              All Projects
-            </Link>
-          </ScrollReveal>
-
-          {/* Project Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-            <ScrollReveal className="lg:col-span-8">
-              <span className="text-overline uppercase text-muted-foreground">
-                {project.category}
+      <section className="pt-5 lg:pt-6">
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="animate-fade-in max-w-5xl">
+            <p className="mb-3 text-xs font-normal tracking-[0.18em] text-muted-foreground sm:text-sm">
+              <Link to={breadcrumbHref} className="font-normal text-muted-foreground transition-colors hover:text-foreground">
+                {breadcrumbCategory}
+              </Link>
+              <span className="px-2 text-muted-foreground/50">|</span>
+              <span className="text-sm font-semibold tracking-normal text-foreground sm:text-base">
+                {breadcrumbTitle}
               </span>
-              <h1 className="font-serif text-heading-1 mt-4">{project.title}</h1>
-              <p className="font-serif text-heading-3 text-muted-foreground mt-2">
-                {project.subtitle}
-              </p>
-            </ScrollReveal>
+            </p>
 
-            <ScrollReveal className="lg:col-span-4" delay={200}>
-              <div className="space-y-4 text-sm">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span>{project.location}</span>
-                </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <Calendar className="w-4 h-4" />
-                  <span>{project.year} {project.semester && `— ${project.semester}`}</span>
-                </div>
-                {project.siteArea && (
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Layers className="w-4 h-4" />
-                    <span>Site: {project.siteArea}</span>
+            <h1 className="font-serif text-heading-1 text-left text-foreground">
+              {project.title}
+            </h1>
+
+            <div className="mt-6 border border-border bg-white p-6 sm:p-8">
+              <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
+                {infoItems.map((item) => (
+                  <div key={item.label}>
+                    <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                      {item.label}
+                    </dt>
+                    <dd className="mt-2 text-sm leading-6 text-foreground sm:text-base">
+                      {item.value}
+                    </dd>
                   </div>
-                )}
-                {project.builtUpArea && (
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Maximize className="w-4 h-4" />
-                    <span>Built-up: {project.builtUpArea}</span>
-                  </div>
-                )}
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Hero Image */}
-      <section className="mt-12 lg:mt-16">
-        <ScrollReveal>
-          <div className="aspect-[21/9] bg-muted overflow-hidden">
-            <img
-              src={project.thumbnail}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* Project Content */}
-      <section className="py-section">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-            {/* Main Content */}
-            <div className="lg:col-span-8 space-y-16">
-              {/* Description */}
-              <ScrollReveal>
-                <h2 className="font-serif text-heading-2 mb-6">Project Overview</h2>
-                <div className="space-y-6 text-body-lg text-muted-foreground leading-relaxed">
-                  {descriptionParagraphs.map((paragraph, index) => (
-                    <p key={index} className="text-justify">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </ScrollReveal>
-
-              {/* Concept */}
-              <ScrollReveal>
-                <h2 className="font-serif text-heading-2 mb-6">Design Concept</h2>
-                <p className="text-body-lg text-muted-foreground leading-relaxed">
-                  {project.concept}
-                </p>
-              </ScrollReveal>
-
-              {/* Image Gallery */}
-              <ScrollReveal>
-                <h2 className="font-serif text-heading-2 mb-8">Drawings & Visuals</h2>
-                <div className="relative -mx-6 lg:-mx-12">
-                  <div className="relative overflow-hidden bg-black min-h-[55vh] sm:min-h-[65vh]">
-                    <div className="absolute left-4 top-4 rounded-full bg-black/50 px-3 py-2 text-sm text-white backdrop-blur-sm">
-                      {galleryImages.length > 0 ? `${activeSlide + 1} / ${galleryImages.length}` : "0 / 0"}
-                    </div>
-
-                    {galleryImages.length > 0 ? (
-                      <>
-                        <img
-                          src={galleryImages[activeSlide]}
-                          alt={`${project.title} - View ${activeSlide + 1}`}
-                          className="block w-full h-full object-cover"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={handlePrev}
-                          disabled={activeSlide === 0}
-                          className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/40 text-white transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-40"
-                          aria-label="Previous image"
-                        >
-                          <ArrowLeft className="h-5 w-5" />
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={handleNext}
-                          disabled={activeSlide === galleryImages.length - 1}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/40 text-white transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-40"
-                          aria-label="Next image"
-                        >
-                          <ArrowRight className="h-5 w-5" />
-                        </button>
-                      </>
-                    ) : (
-                      <div className="flex h-full items-center justify-center px-6 text-sm text-white">
-                        No gallery images available.
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </ScrollReveal>
+                ))}
+              </dl>
             </div>
 
-            {/* Sidebar */}
-            <aside className="lg:col-span-4">
-              <ScrollReveal>
-                <div className="sticky top-32 space-y-8">
-                  <div className="p-8 bg-card border border-border">
-                    <h3 className="font-serif text-heading-3 mb-6">Project Details</h3>
-                    <dl className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-                      <div>
-                        <dt className="text-muted-foreground">Type</dt>
-                        <dd className="mt-1 font-medium">{project.category}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-muted-foreground">Location</dt>
-                        <dd className="mt-1 font-medium">{project.location}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-muted-foreground">Year</dt>
-                        <dd className="mt-1 font-medium">{project.year}</dd>
-                      </div>
-                      {project.semester && (
-                        <div>
-                          <dt className="text-muted-foreground">Academic</dt>
-                          <dd className="mt-1 font-medium">{project.semester}</dd>
-                        </div>
-                      )}
-                      {project.siteArea && (
-                        <div>
-                          <dt className="text-muted-foreground">Site Area</dt>
-                          <dd className="mt-1 font-medium">{project.siteArea}</dd>
-                        </div>
-                      )}
-                      {project.builtUpArea && (
-                        <div>
-                          <dt className="text-muted-foreground">Built-up Area</dt>
-                          <dd className="mt-1 font-medium">{project.builtUpArea}</dd>
-                        </div>
-                      )}
-                    </dl>
+            {descriptionParagraphs.length > 0 && (
+              <div className="mt-8 max-w-4xl space-y-6 text-left text-[1rem] leading-7 text-foreground sm:text-[1.05rem]">
+                <p>{descriptionParagraphs[0]}</p>
+              </div>
+            )}
 
-                    {project.info && (
-                      <div className="mt-6 grid grid-cols-1 gap-4 border-t border-border pt-6 sm:grid-cols-2">
-                        {project.info.map((item) => (
-                          <div key={item.label}>
-                            <dt className="text-muted-foreground">{item.label}</dt>
-                            <dd className="mt-1 font-medium">{item.value}</dd>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+            {galleryImages.length > 0 && (
+              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {galleryImages.map((image, index) => (
+                  <div key={`${project.id}-image-${index}`} className="overflow-hidden border border-border bg-white">
+                    <img
+                      src={image}
+                      alt={`${project.title} image ${index + 1}`}
+                      className="aspect-[4/3] h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {descriptionParagraphs.length > 1 && (
+              <div className="mt-10 max-w-4xl space-y-6 text-left text-[1rem] leading-7 text-foreground sm:text-[1.05rem]">
+                {descriptionParagraphs.slice(1).map((paragraph, index) => (
+                  <p key={`${project.id}-paragraph-${index}`}>{paragraph}</p>
+                ))}
+              </div>
+            )}
+
+            {projectDrawings.length > 0 && (
+              <section className="mt-14 relative left-1/2 w-screen -translate-x-1/2">
+                <div className="mx-auto max-w-7xl px-6 lg:px-12">
+                  <h2 className="font-serif text-heading-2 text-left text-foreground">Project Drawings</h2>
+                </div>
+
+                <div
+                  className="mt-6 overflow-x-auto scroll-smooth"
+                  style={{ scrollBehavior: "smooth" }}
+                  ref={drawingsTrackRef}
+                  onMouseEnter={() => {
+                    isHoveringRef.current = true;
+                  }}
+                  onMouseLeave={() => {
+                    isHoveringRef.current = false;
+                  }}
+                >
+                  <div className="flex w-max gap-6 px-6 pb-3 lg:px-12">
+                    {[...projectDrawings, ...projectDrawings].map((drawing, index) => (
+                      <article
+                        key={`${project.id}-drawing-${index}`}
+                        data-drawing-slide
+                        className="w-[92vw] max-w-[1200px] flex-none snap-center sm:w-[88vw] lg:w-[94vw]"
+                      >
+                        <div className="mx-auto flex min-h-[52vh] items-center justify-center bg-white px-2 py-2 sm:min-h-[60vh] lg:min-h-[68vh]">
+                          <img
+                            src={drawing.image}
+                            alt={`${project.title} - ${drawing.label}`}
+                            className="h-auto w-full max-h-[66vh] object-contain"
+                            draggable={false}
+                          />
+                        </div>
+                        <p className="mt-4 text-left text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                          {drawing.label}
+                        </p>
+                      </article>
+                    ))}
                   </div>
                 </div>
-              </ScrollReveal>
-            </aside>
-          </div>
-        </div>
-      </section>
 
-      {/* Project Navigation */}
-      <section className="py-section-sm border-t border-border">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 gap-8">
-            {prevProject ? (
-              <Link
-                to={`/projects/${prevProject.id}`}
-                className="group"
-              >
-                <span className="text-overline uppercase text-muted-foreground flex items-center gap-2">
-                  <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform duration-300" />
-                  Previous
-                </span>
-                <h3 className="font-serif text-heading-3 mt-2 group-hover:text-accent transition-colors duration-300">
-                  {prevProject.title}
-                </h3>
-              </Link>
-            ) : (
-              <div />
-            )}
-            
-            {nextProject && (
-              <Link
-                to={`/projects/${nextProject.id}`}
-                className="group text-right"
-              >
-                <span className="text-overline uppercase text-muted-foreground flex items-center gap-2 justify-end">
-                  Next
-                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-                <h3 className="font-serif text-heading-3 mt-2 group-hover:text-accent transition-colors duration-300">
-                  {nextProject.title}
-                </h3>
-              </Link>
+                <div className="mx-auto mt-5 flex max-w-7xl items-center justify-between gap-4 px-6 lg:px-12">
+                  <button
+                    type="button"
+                    onClick={() => scrollToDrawing(activeDrawingIndex - 1)}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white text-foreground transition-colors hover:bg-muted"
+                    aria-label="Previous drawing"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {projectDrawings.map((drawing, index) => (
+                      <button
+                        key={`${project.id}-indicator-${drawing.label}`}
+                        type="button"
+                        onClick={() => scrollToDrawing(index)}
+                        className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                          activeDrawingIndex === index ? "bg-foreground" : "bg-foreground/25"
+                        }`}
+                        aria-label={`Go to ${drawing.label}`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToDrawing(activeDrawingIndex + 1)}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white text-foreground transition-colors hover:bg-muted"
+                    aria-label="Next drawing"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
+              </section>
             )}
           </div>
         </div>

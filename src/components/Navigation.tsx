@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight, Menu, X, Search } from "lucide-react";
@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Architecture", href: "/projects" },
-  { label: "Research", href: "/research" },
+  { label: "Research & Publication", href: "/research" },
   { label: "Studio Library", href: "/studio/library" },
   { label: "Studio Archive", href: "/studio/archive" },
   { label: "Contact", href: "/contact" },
@@ -68,7 +68,7 @@ const navigationSections: Array<{
     items: [
       { label: "Papers", href: "/research/papers" },
       { label: "Books", href: "/research/books" },
-      { label: "Videos", href: "/research/videos" },
+      { label: "Video", href: "/research/videos" },
     ],
   },
   {
@@ -93,8 +93,8 @@ const navigationSections: Array<{
       "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80",
     items: [
       { label: "People", href: "/practice/people" },
-      { label: "Achievements", href: "/practice/achievements" },
-      { label: "Careers", href: "/practice/careers" },
+      { label: "Achievement", href: "/practice/achievements" },
+      { label: "Career", href: "/practice/careers" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -151,8 +151,10 @@ export function Navigation() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
-  const [openSection, setOpenSection] = useState<string>("projects");
-  const [hoveredSection, setHoveredSection] = useState<string>("projects");
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [hoveredSection, setHoveredSection] = useState<string>("");
+  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
+  const hoverCloseTimerRef = useRef<number | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -212,7 +214,7 @@ export function Navigation() {
   }, [searchIndex, searchQuery]);
 
   const featuredSection =
-    navigationSections.find((section) => section.id === (hoveredSection || openSection)) ||
+    navigationSections.find((section) => section.id === (activeSection || hoveredSection || "projects")) ||
     navigationSections[0];
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -248,8 +250,19 @@ export function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -278,13 +291,72 @@ export function Navigation() {
     );
 
     if (matchedSection) {
-      setOpenSection(matchedSection.id);
-      setHoveredSection(matchedSection.id);
+      setActiveSection(matchedSection.id);
+      setHoveredSection("");
+    } else {
+      setActiveSection("");
+      setHoveredSection("");
     }
   }, [isOpen, location.pathname, isPathActive]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setActiveSection("");
+      setHoveredSection("");
+    }
+  }, [isOpen]);
+
   const toggleSection = (sectionId: string) => {
-    setOpenSection((current) => (current === sectionId ? "" : sectionId));
+    setActiveSection((current) => (current === sectionId ? "" : sectionId));
+    setHoveredSection("");
+  };
+
+  const handleSectionMouseEnter = (sectionId: string) => {
+    if (isDesktop) {
+      if (hoverCloseTimerRef.current) {
+        window.clearTimeout(hoverCloseTimerRef.current);
+        hoverCloseTimerRef.current = null;
+      }
+
+      setHoveredSection(sectionId);
+    }
+  };
+
+  const handleSectionMouseLeave = () => {
+    if (isDesktop) {
+      if (hoverCloseTimerRef.current) {
+        window.clearTimeout(hoverCloseTimerRef.current);
+      }
+
+      hoverCloseTimerRef.current = window.setTimeout(() => {
+        setHoveredSection("");
+        hoverCloseTimerRef.current = null;
+      }, 900);
+    }
+  };
+
+  const handleSectionSubmenuEnter = (sectionId: string) => {
+    if (!isDesktop) return;
+
+    if (hoverCloseTimerRef.current) {
+      window.clearTimeout(hoverCloseTimerRef.current);
+      hoverCloseTimerRef.current = null;
+    }
+
+    setHoveredSection(sectionId);
+  };
+
+  const handleSectionSubmenuLeave = () => {
+    if (!isDesktop) return;
+
+    if (hoverCloseTimerRef.current) {
+      window.clearTimeout(hoverCloseTimerRef.current);
+    }
+
+    hoverCloseTimerRef.current = window.setTimeout(() => {
+      setHoveredSection("");
+      hoverCloseTimerRef.current = null;
+    }, 900);
   };
 
   const handleItemNavigate = (href: string) => {
@@ -292,25 +364,43 @@ export function Navigation() {
     setIsOpen(false);
     setSearchOpen(false);
     setSearchQuery("");
+    setActiveSection("");
+    setHoveredSection("");
+  };
+
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setIsOpen(false);
+    setSearchOpen(false);
+    setSearchQuery("");
+    setActiveSection("");
+    setHoveredSection("");
+
+    if (location.pathname === "/") {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#FFFFFF] border-none shadow-none"
-      )}
-    >
-      <nav className="container mx-auto px-6 lg:px-12 border-none">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link
-            to="/"
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity duration-300"
-          >
-            <img src={logo} alt={`${BRAND.name} logo`} className="h-6 w-6 lg:h-8 lg:w-8 object-contain" />
-            <span className="hidden sm:block font-serif text-lg lg:text-xl tracking-tight text-foreground font-medium">
-              {BRAND.name}
-            </span>
-          </Link>
+    <>
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 bg-[#FFFFFF] border-none transition-shadow duration-300 ease-out",
+          isScrolled ? "shadow-sm" : "shadow-none"
+        )}
+      >
+        <nav className="container mx-auto px-6 lg:px-12 border-none">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            <Link
+              to="/"
+              onClick={handleLogoClick}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity duration-300"
+            >
+              <img src={logo} alt={`${BRAND.name} logo`} className="h-6 w-6 lg:h-8 lg:w-8 object-contain" />
+              <span className="hidden sm:block font-serif text-lg lg:text-xl tracking-tight text-foreground font-medium">
+                {BRAND.name}
+              </span>
+            </Link>
 
           <div className="hidden md:flex items-center gap-3">
             <div className="relative">
@@ -423,7 +513,7 @@ export function Navigation() {
               <X size={22} />
             </button>
 
-            <div className="grid h-full grid-cols-1 md:grid-cols-[45%_55%]">
+            <div className="grid h-full grid-cols-1 md:grid-cols-[minmax(0,62%)_minmax(0,38%)]">
               <div className="relative hidden h-full overflow-hidden md:block">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -440,14 +530,10 @@ export function Navigation() {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#F8F7F4]/10 to-[#F8F7F4]/0" />
               </div>
 
-              <div className="flex h-full flex-col overflow-y-auto px-6 pb-12 pt-16 md:px-10 md:pt-16 lg:px-16">
-                <div className="mb-10 md:mb-14">
-                  <p className="text-xs uppercase tracking-[0.5em] text-[#211911]/50">Menu</p>
-                </div>
-
-                <div className="space-y-3">
+              <div className="flex h-full flex-col overflow-y-auto px-6 py-12 md:px-8 md:py-14 lg:px-12 lg:py-16">
+                <div className="flex flex-1 flex-col justify-center space-y-2 md:space-y-3">
                   {navigationSections.map((section) => {
-                    const isOpenSection = openSection === section.id;
+                    const isOpenSection = activeSection === section.id || (!activeSection && hoveredSection === section.id);
                     const hasItems = Boolean(section.items?.length);
                     const isSectionActive = isPathActive(section.href) ||
                       (section.items?.some((item) => isPathActive(item.href)) ?? false);
@@ -458,13 +544,13 @@ export function Navigation() {
                           <button
                             type="button"
                             onClick={() => toggleSection(section.id)}
-                            onMouseEnter={() => setHoveredSection(section.id)}
-                            onMouseLeave={() => setHoveredSection(openSection || "projects")}
+                            onMouseEnter={() => handleSectionMouseEnter(section.id)}
+                            onMouseLeave={handleSectionMouseLeave}
                             className="flex w-full items-center justify-between py-2 text-left"
                           >
                             <span
                               className={cn(
-                                "text-2xl font-light tracking-wide transition-colors duration-300 md:text-3xl",
+                                "text-[1.7rem] font-light tracking-wide transition-colors duration-300 md:text-[2rem] lg:text-[2.35rem]",
                                 isSectionActive ? "text-[#211911]" : "text-[#211911]/60"
                               )}
                             >
@@ -481,13 +567,13 @@ export function Navigation() {
                           <button
                             type="button"
                             onClick={() => handleItemNavigate(section.href)}
-                            onMouseEnter={() => setHoveredSection(section.id)}
-                            onMouseLeave={() => setHoveredSection(openSection || "projects")}
+                            onMouseEnter={() => handleSectionMouseEnter(section.id)}
+                            onMouseLeave={handleSectionMouseLeave}
                             className="flex w-full items-center justify-between py-2 text-left"
                           >
                             <span
                               className={cn(
-                                "text-2xl font-light tracking-wide transition-colors duration-300 md:text-3xl",
+                                "text-[1.7rem] font-light tracking-wide transition-colors duration-300 md:text-[2rem] lg:text-[2.35rem]",
                                 isSectionActive ? "text-[#211911]" : "text-[#211911]/60"
                               )}
                             >
@@ -504,6 +590,8 @@ export function Navigation() {
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3, ease: "easeInOut" }}
                               className="overflow-hidden"
+                              onMouseEnter={() => handleSectionSubmenuEnter(section.id)}
+                              onMouseLeave={handleSectionSubmenuLeave}
                             >
                               <div className="space-y-2 pb-2 pt-2">
                                 {section.items?.map((item) => (
@@ -512,7 +600,7 @@ export function Navigation() {
                                     type="button"
                                     onClick={() => handleItemNavigate(item.href)}
                                     className={cn(
-                                      "block w-full py-2 text-left text-base md:text-lg",
+                                      "block w-full py-2 pl-4 text-left text-[0.95rem] md:text-[1.05rem] lg:text-[1.15rem]",
                                       isPathActive(item.href)
                                         ? "text-[#211911]"
                                         : "text-[#211911]/60 hover:text-[#211911]"
@@ -537,5 +625,7 @@ export function Navigation() {
         )}
       </AnimatePresence>
     </header>
+    <div className="h-16 lg:h-20" aria-hidden="true" />
+    </>
   );
 }
